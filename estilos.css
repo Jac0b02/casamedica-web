@@ -1,0 +1,329 @@
+:root {
+    --primary-color: #78C0B9; /* Nuevo color del botón */
+    --primary-hover: #5DAAA3; /* Un tono ligeramente más oscuro para el hover */
+    --success-color: #F17A62; /* Coral del corazón */
+    --success-hover: #D9644D; /* Coral oscuro al pasar el mouse */
+    --danger-color: #dc2626;
+    --danger-bg: #fee2e2;
+    --bg-color: #FAFAFA; /* Fondo blanco/hueso limpio */
+    --text-main: #2A5B75; /* Azul oscuro de la tipografía */
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-main);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: white;
+    border-bottom: 2px solid #a4cedd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Agrupamos el texto para que se apile profesionalmente */
+.logo-text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-text-group h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #2a5b77;
+    font-weight: bold;
+}
+
+.logo-text-group h2 {
+    margin: 0;
+    font-size: 13px;
+    color: #2a5b77;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+}
+
+/* === TAMAÑO PERFECTO DE LA IMAGEN === */
+.logo-img {
+    max-height: 50px; /* Limitar altura */
+    width: auto;
+}
+
+.user-info {
+    font-size: 14px;
+    color: #2a5b77;
+}
+/* Contenedor Principal */
+.main-container {
+    max-width: 800px;
+    margin: 2.5rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Indicadores de Pasos */
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.step.active { color: var(--primary-color); font-weight: bold; }
+.step.completed { color: var(--success-color); font-weight: 500; }
+
+/* Tipografía */
+h2 { font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem; }
+h3 { font-size: 1.125rem; margin: 0 0 0.5rem 0; }
+.highlight-text { color: var(--primary-color); font-weight: 500; margin-bottom: 1rem; }
+.title-large { font-size: 2rem; margin-bottom: 0.5rem; }
+.subtitle { color: var(--text-muted); margin-bottom: 1.5rem; }
+.text-center { text-align: center; padding: 2.5rem 0; }
+
+/* Utilidades */
+.hidden { display: none !important; }
+.mb-3 { margin-bottom: 0.75rem; }
+
+/* Grillas */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.flex-gap { display: flex; gap: 0.75rem; }
+.justify-between { display: flex; justify-content: space-between; }
+.items-center { align-items: center; }
+
+/* Tarjetas (Cards) */
+.card {
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--primary-color); }
+.card p { color: var(--text-muted); margin: 0 0 1rem 0; }
+
+/* Formularios */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+/* Botones */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+.btn-primary { 
+    background-color: var(--primary-color); 
+    color: white; /* Asegura que el texto sea blanco */
+    font-weight: 500; /* Le da un poco más de peso al texto */
+}
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn-outline { background-color: #eff6ff; color: var(--primary-color); width: 100%; }
+.btn-text { background-color: transparent; color: var(--text-muted); }
+.btn-text:hover { color: var(--text-main); }
+.btn-success { background-color: var(--success-color); color: white; font-weight: bold; }
+.btn-success:hover { background-color: var(--success-hover); }
+.btn-danger { background-color: var(--danger-bg); color: var(--danger-color); }
+
+.time-slot {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    background: white;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+.time-slot:hover { background-color: #eff6ff; }
+.time-slot:focus { background-color: var(--primary-color); color: white; }
+
+/* Secciones específicas */
+.summary-box {
+    background-color: #F0F7F6; /* Turquesa súper claro */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.summary-total {
+    border-top: 1px solid var(--primary-color);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-price { 
+    font-size: 1.25rem; 
+    font-weight: bold; 
+    color: var(--success-color); /* El precio total en color Coral */
+}
+.total-price { font-size: 1.25rem; font-weight: bold; color: #1e40af; }
+.payment-form {
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.error-msg { color: var(--danger-color); font-size: 0.875rem; margin-top: 0.75rem; }
+.success-icon { color: var(--success-color); font-size: 4rem; margin-bottom: 1rem; }
+
+/* ==================== FOOTER ==================== */
+.site-footer {
+    background-color: var(--text-main); /* Usa el azul oscuro de tu marca */
+    color: white;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+}
+
+.footer-disclaimer {
+    background-color: var(--danger-bg);
+    color: var(--danger-color);
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.footer-logo {
+    color: var(--primary-color); /* Turquesa para resaltar el nombre */
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+.footer-col h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+    color: #cbd5e1; /* Gris claro para los enlaces */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-col a:hover {
+    color: white; /* Se iluminan al pasar el mouse */
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    width: 30px; /* Tamaño de tus íconos */
+    height: 30px;
+    transition: transform 0.2s;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    background-color: #1a3b4c; /* Un azul aún más oscuro para la base */
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ==================== MEJORAS TARJETAS DOCTORES ==================== */
+.doctor-profile {
+    display: flex;
+    align-items: center; /* Alinea la foto con el texto */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.doctor-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%; /* Esto hace que la imagen sea un círculo perfecto */
+    object-fit: cover; /* Evita que las fotos se deformen si no son cuadradas */
+    border: 2px solid var(--primary-color); /* Borde turquesa de tu marca */
+}
+
+.doctor-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.rating {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.rating span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-left: 5px;
+}
+
+.specialty {
+    margin: 0 !important;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.doctor-availability {
+    background-color: #f0fdf4; /* Un verde muy clarito que da sensación de "disponible" */
+    border: 1px solid #bbf7d0;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: var(--success-hover); /* Verde más oscuro para el texto */
+    text-align: center;
+}

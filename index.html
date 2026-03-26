@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita Médica</title>
+    <!-- Enlazamos nuestro archivo CSS externo -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- Navbar simulando sesión iniciada -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-text-group"> <h1>CasaMedica</h1>
+                <h2>TU ESPACIO DE SALUD</h2>
+            </div>
+            <img src="casamedicasin.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="user-info">👤 Hola, Paciente Autenticado</div>
+    </nav>
+
+    <main class="main-container">
+        
+        <!-- Indicador de Pasos -->
+        <div class="step-indicator">
+            <span id="step1-indicator" class="step active">1. Elegir Doctor</span>
+            <span id="step2-indicator" class="step">2. Horario</span>
+            <span id="step3-indicator" class="step">3. Pago (50%)</span>
+            <span id="step4-indicator" class="step">4. Confirmación</span>
+        </div>
+
+        <!-- PASO 1: Selección de Doctor (Ahora con 6 opciones) -->
+        <div id="step1" class="step-container">
+            <h2>Selecciona un Doctor</h2>
+            <div class="grid-2">
+                <!-- Tarjeta 1: Dra. Ana López -->
+                <div class="card" onclick="nextStep(2, 'Dra. Ana López (Cardiología)')">
+                    
+                    <!-- Nueva sección superior: Foto y Datos -->
+                    <div class="doctor-profile">
+                        <!-- Imagen de relleno temporal -->
+                        <img src="cardiologa.jpg" alt="Foto Doctor" class="doctor-avatar">
+                        
+                        <div class="doctor-info">
+                            <h3>Dra. Ana López</h3>
+                            <!-- Calificación de estrellas -->
+                            <div class="rating">⭐⭐⭐⭐⭐ <span>(48 reseñas)</span></div>
+                            <!-- Ícono y especialidad -->
+                            <p class="specialty">❤️ Cardiología</p>
+                        </div>
+                    </div>
+
+                    <!-- Nueva sección: Disponibilidad -->
+                    <div class="doctor-availability">
+                        🟢 Próxima cita: Hoy 4:00 PM
+                    </div>
+
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+                <div class="card" onclick="nextStep(2, 'Dr. Carlos Pérez (Dermatología)')">
+                    <h3>Dr. Carlos Pérez</h3>
+                    <p>Dermatología</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+                <div class="card" onclick="nextStep(2, 'Dra. María González (Pediatría)')">
+                    <h3>Dra. María González</h3>
+                    <p>Pediatría</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+                <div class="card" onclick="nextStep(2, 'Dr. Luis Martínez (Traumatología)')">
+                    <h3>Dr. Luis Martínez</h3>
+                    <p>Traumatología</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+                <div class="card" onclick="nextStep(2, 'Dra. Sofía Ramírez (Neurología)')">
+                    <h3>Dra. Sofía Ramírez</h3>
+                    <p>Neurología</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+                <div class="card" onclick="nextStep(2, 'Dr. Jorge Herrera (Gastroenterología)')">
+                    <h3>Dr. Jorge Herrera</h3>
+                    <p>Gastroenterología</p>
+                    <button class="btn btn-primary">Seleccionar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PASO 2: Selección de Sucursal y Horario -->
+        <div id="step2" class="step-container hidden">
+            <h2>Elige Sucursal y Horario</h2>
+            <p id="selected-doctor" class="highlight-text"></p>
+            
+            <div class="form-group">
+                <label>Sucursal Disponibles</label>
+                <select id="sucursal" class="form-control">
+                    <option>Centro Médico Norte</option>
+                    <option>Clínica Sur</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Horarios Disponibles</label>
+                <div class="grid-3">
+                    <button class="time-slot" onclick="selectTime('09:00 AM')">09:00 AM</button>
+                    <button class="time-slot" onclick="selectTime('11:30 AM')">11:30 AM</button>
+                    <button class="time-slot" onclick="selectTime('04:00 PM')">04:00 PM</button>
+                </div>
+            </div>
+            <div class="actions justify-between">
+                <button onclick="prevStep(1)" class="btn btn-text">← Volver</button>
+                <button onclick="nextStep(3)" class="btn btn-primary">Continuar</button>
+            </div>
+        </div>
+
+        <!-- PASO 3: Resumen y Pago -->
+        <div id="step3" class="step-container hidden">
+            <h2>Resumen y Pago</h2>
+            <div class="summary-box">
+                <ul>
+                    <li><strong>Doctor:</strong> <span id="summary-doctor"></span></li>
+                    <li><strong>Horario:</strong> <span id="summary-time"></span></li>
+                    <li><strong>Sucursal:</strong> <span id="summary-sucursal"></span></li>
+                </ul>
+                <div class="summary-total">
+                    <span>Costo total: $1,000 MXN</span>
+                    <span class="total-price">Anticipo (50%): $500 MXN</span>
+                </div>
+            </div>
+
+            <!-- Formulario de Pago -->
+            <div class="payment-form">
+                <h3>Introduce datos de pago</h3>
+                <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta" class="form-control mb-3">
+                <div class="flex-gap">
+                    <input type="text" placeholder="MM/AA" class="form-control">
+                    <input type="text" placeholder="CVC" class="form-control">
+                </div>
+            </div>
+
+            <!-- Botones simulando el bloque 'alt' -->
+            <div class="actions justify-between items-center">
+                <button onclick="prevStep(2)" class="btn btn-text">← Volver</button>
+                <div class="flex-gap">
+                    <!-- <button onclick="simulatePayment(false)" class="btn btn-danger">Simular Error de Pago</button> -->
+                    <button id="btn-pagar" onclick="simulatePayment(true)" class="btn btn-success">Pagar y Agendar</button>
+                </div>
+            </div>
+            <p id="payment-error" class="error-msg hidden">Error en el pago: Fondos insuficientes. Intenta nuevamente.</p>
+        </div>
+
+        <!-- PASO 4: Confirmación -->
+        <div id="step4" class="step-container hidden text-center">
+            <div class="success-icon">✓</div>
+            <h2 class="title-large">¡Cita Confirmada!</h2>
+            <p class="subtitle">El pago fue exitoso, tu horario ha sido bloqueado y hemos enviado una notificación a tu correo y al del doctor.</p>
+            <button onclick="location.reload()" class="btn btn-primary">Volver al inicio</button>
+        </div>
+
+    </main>
+    <!-- Footer CasaMedica -->
+    <footer class="site-footer">
+        <!-- Descargo de responsabilidad -->
+        <div class="footer-disclaimer">
+            <p>⚠️ <strong>Atención:</strong> CasaMedica no atiende emergencias médicas. En caso de una emergencia, llame al 911 o acuda al hospital más cercano.</p>
+        </div>
+
+        <div class="footer-content">
+            <!-- Columna 1: Branding -->
+            <div class="footer-col branding">
+                <h3 class="footer-logo">CasaMedica</h3>
+                <p>Tu espacio de salud.</p>
+                <div class="social-links">
+                    <!-- Aquí pon la ruta de tus imágenes de redes -->
+                    <a href="https://www.facebook.com/share/14bTTWqxJrE/"><img src="face.png" alt="Facebook" class="social-icon"></a>
+                    <a href="https://www.instagram.com/_casamedica_?igsh=MmNtZ2VxcXM4ZjY1"><img src="insta.png" alt="Instagram" class="social-icon"></a>
+                    <a href="https://www.tiktok.com/@casamedica1?_r=1&_t=ZS-950CyYFi7JE"><img src="Captura de pantalla 2026-03-25 223524.png" alt="Tiktok" class="social-icon"></a>
+                </div>
+            </div>
+
+            <!-- Columna 2: Navegación -->
+            <div class="footer-col">
+                <h4>Navegación Rápida</h4>
+                <ul>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="#">Directorio de Especialidades</a></li>
+                    <li><a href="#">¿Eres Doctor? Regístrate</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Soporte -->
+            <div class="footer-col">
+                <h4>Soporte al Paciente</h4>
+                <ul>
+                    <li><a href="#">Preguntas Frecuentes (FAQ)</a></li>
+                    <li><a href="#">soporte@casamedica.com</a></li>
+                    <li><a href="#">Tel: 800-123-4567</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 4: Legal -->
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 CasaMedica. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    
+</body>
+</html>
