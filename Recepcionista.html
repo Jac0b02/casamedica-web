@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Recepción - CasaMedica</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="Recepcionista.css"> <!-- Estilos específicos del dashboard -->
+</head>
+<body class="dashboard-body">
+
+    <!-- Navbar del Dashboard -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-text-group"> 
+                <h1>CasaMedica</h1>
+                <h2>PANEL DE RECEPCIÓN</h2>
+            </div>
+            <img src="casamedicasin.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="user-info">
+            👤 Recepcionista: María López | Sucursal: Centro Médico Norte
+        </div>
+    </nav>
+
+    <div class="dashboard-layout">
+        <!-- Menú Lateral (Sidebar) -->
+        <aside class="sidebar">
+            <ul class="nav-links">
+                <li class="active">📅 Agenda del Día</li>
+                <li>💰 Pagos y Cobros</li>
+                <li>👥 Pacientes</li>
+                <li>🚪 Consultorios (Rentas)</li>
+                <li>⚙️ Configuración</li>
+            </ul>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="dashboard-content">
+            
+            <!-- Tarjetas de Resumen (KPIs) -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Pacientes Hoy</h3>
+                    <p class="kpi-number">24</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>En Espera</h3>
+                    <p class="kpi-number text-warning">5</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Cobros Pendientes</h3>
+                    <p class="kpi-number text-danger">8</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Consultorios Activos</h3>
+                    <p class="kpi-number text-success">4/6</p>
+                </div>
+            </div>
+
+            <!-- Tabla de Citas del Día -->
+            <div class="panel-section">
+                <div class="section-header justify-between items-center mb-3">
+                    <h2>Citas Programadas - Hoy</h2>
+                    <button class="btn btn-primary">+ Nueva Cita Rápida</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Paciente</th>
+                                <th>Doctor</th>
+                                <th>Consultorio</th>
+                                <th>Estado Pago</th>
+                                <th>Estatus</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="citas-body">
+                            <!-- Fila 1: Paciente que ya pagó el anticipo en web -->
+                            <tr>
+                                <td>09:00 AM</td>
+                                <td><strong>Juan Pérez</strong><br><small>667-123-4567</small></td>
+                                <td>Dra. Ana López (Cardiología)</td>
+                                <td>Consultorio 1</td>
+                                <td><span class="badge badge-warning">Anticipo 50%</span></td>
+                                <td><span class="badge badge-info">Agendado</span></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" onclick="cobrarRestante(this)">Cobrar y Check-in</button>
+                                    <button class="btn btn-danger btn-sm ml-3" onclick="iniciarCancelacion(this, 48)">Cancelar</button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 2: Paciente que ya pagó completo y está esperando -->
+                            <tr>
+                                <td>09:30 AM</td>
+                                <td><strong>María García</strong><br><small>667-987-6543</small></td>
+                                <td>Dr. Carlos Pérez (Dermatología)</td>
+                                <td>Consultorio 3</td>
+                                <td><span class="badge badge-success">Pagado 100%</span></td>
+                                <td><span class="badge badge-primary">En Sala de Espera</span></td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" disabled>Listo</button>
+                                </td>
+                            </tr>
+
+                            <!-- Fila 3: Cita de la tarde, pendiente -->
+                            <tr>
+                                <td>04:00 PM</td>
+                                <td><strong>Luis Martínez</strong><br><small>667-555-0000</small></td>
+                                <td>Dra. Ana López (Cardiología)</td>
+                                <td>Consultorio 1</td>
+                                <td><span class="badge badge-warning">Anticipo 50%</span></td>
+                                <td><span class="badge badge-info">Agendado</span></td>
+                                <td>
+                                <button class="btn btn-success btn-sm" onclick="cobrarRestante(this)">Cobrar y Check-in</button>
+                                <button class="btn btn-danger btn-sm ml-3" onclick="iniciarCancelacion(this, 2)">Cancelar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ==================== INICIO DEL MODAL DE CANCELACIÓN ==================== -->
+    <div id="modal-cancelacion" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-danger mb-3">Cancelar Cita</h2>
+            
+            <div class="summary-box mb-3">
+                <p><strong>Paciente:</strong> <span id="cancel-paciente"></span></p>
+                <p><strong>Doctor:</strong> <span id="cancel-doctor"></span></p>
+                <p><strong>Hora:</strong> <span id="cancel-hora"></span></p>
+            </div>
+
+            <div id="alerta-reembolso" class="alerta-validacion mb-3">
+                <!-- Se inyecta por JS -->
+            </div>
+
+            <div class="actions justify-between mt-4">
+                <button onclick="cerrarModalCancelacion()" class="btn btn-outline">Volver</button>
+                <button onclick="procesarCancelacion()" class="btn btn-danger">Confirmar Cancelación</button>
+            </div>
+        </div>
+    </div>
+    <!-- ==================== FIN DEL MODAL ==================== -->
+
+    <script src="Recepcionista.js"></script>
+</body>
+</html>

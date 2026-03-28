@@ -19,144 +19,290 @@
         </div>
         <div class="user-info">👤 Hola, Paciente Autenticado</div>
     </nav>
-
-    <main class="main-container">
-        
-        <!-- Indicador de Pasos -->
-        <div class="step-indicator">
-            <span id="step1-indicator" class="step active">1. Elegir Doctor</span>
-            <span id="step2-indicator" class="step">2. Horario</span>
-            <span id="step3-indicator" class="step">3. Pago (50%)</span>
-            <span id="step4-indicator" class="step">4. Confirmación</span>
+    <div id="auth-section" class="auth-container">
+        <!-- Formulario de Inicio de Sesión -->
+        <div id="login-form" class="auth-box">
+            <h2>Iniciar Sesión</h2>
+            <p>Ingresa para agendar tu cita en CasaMedica</p>
+            
+            <div class="form-group">
+                <label>Correo Electrónico o Celular</label>
+                <!-- Se pide correo o celular -->
+                <input type="text" id="login-user" class="form-control" placeholder="ejemplo@correo.com o 667...">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="login-pass" class="form-control" placeholder="********">
+            </div>
+            
+            <button onclick="iniciarSesion()" class="btn btn-primary" style="width: 100%;">Entrar</button>
+            <p class="auth-switch text-center">¿No tienes cuenta? <a href="#" onclick="toggleAuth()">Regístrate aquí</a></p>
         </div>
 
-        <!-- PASO 1: Selección de Doctor (Ahora con 6 opciones) -->
-        <div id="step1" class="step-container">
-            <h2>Selecciona un Doctor</h2>
-            <div class="grid-2">
-                <!-- Tarjeta 1: Dra. Ana López -->
-                <div class="card" onclick="nextStep(2, 'Dra. Ana López (Cardiología)')">
+        <!-- Formulario de Registro (Oculto por defecto) -->
+        <div id="register-form" class="auth-box hidden">
+            <h2>Crear Cuenta</h2>
+            <p>Regístrate como nuevo paciente</p>
+            
+            <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" id="reg-name" class="form-control" placeholder="Juan Pérez">
+            </div>
+            <div class="form-group">
+                <label>Correo Electrónico o Celular</label>
+                <input type="text" id="reg-user" class="form-control" placeholder="ejemplo@correo.com o 667...">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="reg-pass" class="form-control" placeholder="********">
+            </div>
+            
+            <button onclick="registrarUsuario()" class="btn btn-success" style="width: 100%;">Registrarme</button>
+            <p class="auth-switch text-center">¿Ya tienes cuenta? <a href="#" onclick="toggleAuth()">Inicia sesión</a></p>
+        </div>
+    </div>
+
+   <!-- Contenedor Principal (Dashboard del Paciente) -->
+    <div id="main-section" class="dashboard-layout hidden">
+        
+        <!-- Menú Lateral -->
+        <aside class="sidebar">
+            <ul class="nav-links">
+                <li id="menu-agendar" class="active" onclick="cambiarVista('agendar')">
+                    ➕ Agendar Cita
+                </li>
+                <li id="menu-citas" onclick="cambiarVista('mis-citas')">
+                    📅 Mis Citas Programadas
+                </li>
+                <li onclick="alert('Módulo de recetas en construcción')">
+                    💊 Mis Recetas
+                </li>
+                <li onclick="alert('Módulo de historial en construcción')">
+                    📁 Historial Médico
+                </li>
+                <li onclick="location.reload()">
+                    🚪 Cerrar Sesión
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Contenido Dinámico -->
+        <main class="dashboard-content">
+            
+            <!-- ========================================== -->
+            <!-- VISTA 1: AGENDAR CITA (Tu código original) -->
+            <!-- ========================================== -->
+            <div id="vista-agendar">
+                
+                <!-- Indicador de Pasos -->
+                <div class="step-indicator">
+                    <span id="step1-indicator" class="step active">1. Elegir Doctor</span>
+                    <span id="step2-indicator" class="step">2. Horario</span>
+                    <span id="step3-indicator" class="step">3. Pago (50%)</span>
+                    <span id="step4-indicator" class="step">4. Confirmación</span>
+                </div>
+
+                <!-- PASO 1: Selección de Doctor -->
+                <div id="step1" class="step-container">
+                    <h2>Selecciona un Doctor</h2>
+                    <div class="grid-2">
+                        <!-- Tarjeta 1: Dra. Ana López -->
+                        <div class="card" onclick="nextStep(2, 'Dra. Ana López (Cardiología)')">
+                            <div class="doctor-profile">
+                                <img src="doctora1.png" alt="Foto Dra. Ana López" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dra. Ana López</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(48 reseñas)</span></div>
+                                    <p class="specialty">❤️ Cardiología</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+
+                        <!-- Tarjeta 2: Dr. Carlos Pérez -->
+                        <div class="card" onclick="nextStep(2, 'Dr. Carlos Pérez (Dermatología)')">
+                            <div class="doctor-profile">
+                                <img src="doctor1.png" alt="Foto Dr. Carlos Pérez" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dr. Carlos Pérez</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(35 reseñas)</span></div>
+                                    <p class="specialty">🩺 Dermatología</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+
+                        <!-- Tarjeta 3: Dra. María González -->
+                        <div class="card" onclick="nextStep(2, 'Dra. María González (Pediatría)')">
+                            <div class="doctor-profile">
+                                <img src="doctora2.png" alt="Foto Dra. María González" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dra. María González</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(62 reseñas)</span></div>
+                                    <p class="specialty">👶 Pediatría</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+
+                        <!-- Tarjeta 4: Dr. Luis Martínez -->
+                        <div class="card" onclick="nextStep(2, 'Dr. Luis Martínez (Traumatología)')">
+                            <div class="doctor-profile">
+                                <img src="doctor2.png" alt="Foto Dr. Luis Martínez" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dr. Luis Martínez</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(28 reseñas)</span></div>
+                                    <p class="specialty">🦴 Traumatología</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+
+                        <!-- Tarjeta 5: Dra. Sofía Ramírez -->
+                        <div class="card" onclick="nextStep(2, 'Dra. Sofía Ramírez (Neurología)')">
+                            <div class="doctor-profile">
+                                <img src="doctora3.png" alt="Foto Dra. Sofía Ramírez" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dra. Sofía Ramírez</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(41 reseñas)</span></div>
+                                    <p class="specialty">🧠 Neurología</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+
+                        <!-- Tarjeta 6: Dr. Jorge Herrera -->
+                        <div class="card" onclick="nextStep(2, 'Dr. Jorge Herrera (Gastroenterología)')">
+                            <div class="doctor-profile">
+                                <img src="doctor3.png" alt="Foto Dr. Jorge Herrera" class="doctor-avatar">
+                                <div class="doctor-info">
+                                    <h3>Dr. Jorge Herrera</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ <span>(50 reseñas)</span></div>
+                                    <p class="specialty">🩺 Gastroenterología</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 2: Selección de Sucursal y Horario -->
+                <div id="step2" class="step-container hidden">
+                    <h2>Elige Sucursal y Horario</h2>
+                    <p id="selected-doctor" class="highlight-text"></p>
                     
-                    <!-- Nueva sección superior: Foto y Datos -->
-                    <div class="doctor-profile">
-                        <!-- Imagen de relleno temporal -->
-                        <img src="cardiologa.jpg" alt="Foto Doctor" class="doctor-avatar">
-                        
-                        <div class="doctor-info">
-                            <h3>Dra. Ana López</h3>
-                            <!-- Calificación de estrellas -->
-                            <div class="rating">⭐⭐⭐⭐⭐ <span>(48 reseñas)</span></div>
-                            <!-- Ícono y especialidad -->
-                            <p class="specialty">❤️ Cardiología</p>
+                    <div class="form-group">
+                        <label>Sucursal Disponibles</label>
+                        <select id="sucursal" class="form-control">
+                            <option>Centro Médico Norte</option>
+                            <option>Clínica Sur</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Horarios Disponibles</label>
+                        <div class="grid-3">
+                            <button class="time-slot" onclick="selectTime('09:00 AM')">09:00 AM</button>
+                            <button class="time-slot" onclick="selectTime('11:30 AM')">11:30 AM</button>
+                            <button class="time-slot" onclick="selectTime('04:00 PM')">04:00 PM</button>
+                        </div>
+                    </div>
+                    <div class="actions justify-between">
+                        <button onclick="prevStep(1)" class="btn btn-text">← Volver</button>
+                        <button onclick="nextStep(3)" class="btn btn-primary">Continuar</button>
+                    </div>
+                </div>
+
+                <!-- PASO 3: Resumen y Pago -->
+                <div id="step3" class="step-container hidden">
+                    <h2>Resumen y Pago</h2>
+                    <div class="summary-box">
+                        <ul>
+                            <li><strong>Doctor:</strong> <span id="summary-doctor"></span></li>
+                            <li><strong>Horario:</strong> <span id="summary-time"></span></li>
+                            <li><strong>Sucursal:</strong> <span id="summary-sucursal"></span></li>
+                        </ul>
+                        <div class="summary-total">
+                            <span>Costo total: $1,000 MXN</span>
+                            <span class="total-price">Anticipo (50%): $500 MXN</span>
                         </div>
                     </div>
 
-                    <!-- Nueva sección: Disponibilidad -->
-                    <div class="doctor-availability">
-                        🟢 Próxima cita: Hoy 4:00 PM
+                    <!-- Formulario de Pago -->
+                    <div class="payment-form">
+                        <h3>Introduce datos de pago</h3>
+                        <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta" class="form-control mb-3">
+                        <div class="flex-gap">
+                            <input type="text" placeholder="MM/AA" class="form-control">
+                            <input type="text" placeholder="CVC" class="form-control">
+                        </div>
                     </div>
 
-                    <button class="btn btn-primary">Seleccionar</button>
+                    <!-- Botones simulando el bloque 'alt' -->
+                    <div class="actions justify-between items-center">
+                        <button onclick="prevStep(2)" class="btn btn-text">← Volver</button>
+                        <div class="flex-gap">
+                            <button id="btn-pagar" onclick="simulatePayment(true)" class="btn btn-success">Pagar y Agendar</button>
+                        </div>
+                    </div>
+                    <p id="payment-error" class="error-msg hidden">Error en el pago: Fondos insuficientes. Intenta nuevamente.</p>
                 </div>
-                <div class="card" onclick="nextStep(2, 'Dr. Carlos Pérez (Dermatología)')">
-                    <h3>Dr. Carlos Pérez</h3>
-                    <p>Dermatología</p>
-                    <button class="btn btn-primary">Seleccionar</button>
-                </div>
-                <div class="card" onclick="nextStep(2, 'Dra. María González (Pediatría)')">
-                    <h3>Dra. María González</h3>
-                    <p>Pediatría</p>
-                    <button class="btn btn-primary">Seleccionar</button>
-                </div>
-                <div class="card" onclick="nextStep(2, 'Dr. Luis Martínez (Traumatología)')">
-                    <h3>Dr. Luis Martínez</h3>
-                    <p>Traumatología</p>
-                    <button class="btn btn-primary">Seleccionar</button>
-                </div>
-                <div class="card" onclick="nextStep(2, 'Dra. Sofía Ramírez (Neurología)')">
-                    <h3>Dra. Sofía Ramírez</h3>
-                    <p>Neurología</p>
-                    <button class="btn btn-primary">Seleccionar</button>
-                </div>
-                <div class="card" onclick="nextStep(2, 'Dr. Jorge Herrera (Gastroenterología)')">
-                    <h3>Dr. Jorge Herrera</h3>
-                    <p>Gastroenterología</p>
-                    <button class="btn btn-primary">Seleccionar</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- PASO 2: Selección de Sucursal y Horario -->
-        <div id="step2" class="step-container hidden">
-            <h2>Elige Sucursal y Horario</h2>
-            <p id="selected-doctor" class="highlight-text"></p>
-            
-            <div class="form-group">
-                <label>Sucursal Disponibles</label>
-                <select id="sucursal" class="form-control">
-                    <option>Centro Médico Norte</option>
-                    <option>Clínica Sur</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Horarios Disponibles</label>
-                <div class="grid-3">
-                    <button class="time-slot" onclick="selectTime('09:00 AM')">09:00 AM</button>
-                    <button class="time-slot" onclick="selectTime('11:30 AM')">11:30 AM</button>
-                    <button class="time-slot" onclick="selectTime('04:00 PM')">04:00 PM</button>
+                <!-- PASO 4: Confirmación -->
+                <div id="step4" class="step-container hidden text-center">
+                    <div class="success-icon">✓</div>
+                    <h2 class="title-large">¡Cita Confirmada!</h2>
+                    <p class="subtitle">El pago fue exitoso, tu horario ha sido bloqueado y hemos enviado una notificación a tu correo y al del doctor.</p>
+                    <button onclick="location.reload()" class="btn btn-primary">Volver al inicio</button>
                 </div>
-            </div>
-            <div class="actions justify-between">
-                <button onclick="prevStep(1)" class="btn btn-text">← Volver</button>
-                <button onclick="nextStep(3)" class="btn btn-primary">Continuar</button>
-            </div>
-        </div>
 
-        <!-- PASO 3: Resumen y Pago -->
-        <div id="step3" class="step-container hidden">
-            <h2>Resumen y Pago</h2>
-            <div class="summary-box">
-                <ul>
-                    <li><strong>Doctor:</strong> <span id="summary-doctor"></span></li>
-                    <li><strong>Horario:</strong> <span id="summary-time"></span></li>
-                    <li><strong>Sucursal:</strong> <span id="summary-sucursal"></span></li>
-                </ul>
-                <div class="summary-total">
-                    <span>Costo total: $1,000 MXN</span>
-                    <span class="total-price">Anticipo (50%): $500 MXN</span>
+            </div> <!-- FIN DE VISTA 1 -->
+
+
+            <!-- ========================================== -->
+            <!-- VISTA 2: MIS CITAS PROGRAMADAS             -->
+            <!-- ========================================== -->
+            <div id="vista-mis-citas" class="hidden">
+                <div class="section-header justify-between items-center mb-3">
+                    <h2>Mis Citas Programadas</h2>
                 </div>
-            </div>
 
-            <!-- Formulario de Pago -->
-            <div class="payment-form">
-                <h3>Introduce datos de pago</h3>
-                <input type="text" id="numero-tarjeta" placeholder="Número de Tarjeta" class="form-control mb-3">
-                <div class="flex-gap">
-                    <input type="text" placeholder="MM/AA" class="form-control">
-                    <input type="text" placeholder="CVC" class="form-control">
+                <div id="lista-citas">
+                    <!-- Cita Simulada 1 -->
+                    <div class="card mb-3" id="cita-101">
+                        <div class="justify-between items-center">
+                            <div>
+                                <h3 style="color: var(--text-main); margin-bottom: 5px;">Dr. Carlos Pérez</h3>
+                                <p style="margin-bottom: 5px;"><strong>Especialidad:</strong> Dermatología</p>
+                                <p style="margin-bottom: 5px;">📍 Centro Médico Norte</p>
+                                <p class="highlight-text">📅 Jueves 28 de Marzo, 2026 - 10:00 AM</p>
+                            </div>
+                            <button class="btn btn-danger" onclick="cancelarCita('cita-101')">Cancelar Cita</button>
+                        </div>
+                    </div>
+
+                    <!-- Cita Simulada 2 -->
+                    <div class="card mb-3" id="cita-102">
+                        <div class="justify-between items-center">
+                            <div>
+                                <h3 style="color: var(--text-main); margin-bottom: 5px;">Dra. Ana López</h3>
+                                <p style="margin-bottom: 5px;"><strong>Especialidad:</strong> Cardiología</p>
+                                <p style="margin-bottom: 5px;">📍 Clínica Sur</p>
+                                <p class="highlight-text">📅 Viernes 03 de Abril, 2026 - 11:30 AM</p>
+                            </div>
+                            <button class="btn btn-danger" onclick="cancelarCita('cita-102')">Cancelar Cita</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Botones simulando el bloque 'alt' -->
-            <div class="actions justify-between items-center">
-                <button onclick="prevStep(2)" class="btn btn-text">← Volver</button>
-                <div class="flex-gap">
-                    <!-- <button onclick="simulatePayment(false)" class="btn btn-danger">Simular Error de Pago</button> -->
-                    <button id="btn-pagar" onclick="simulatePayment(true)" class="btn btn-success">Pagar y Agendar</button>
+                
+                <!-- Mensaje cuando no hay citas -->
+                <div id="mensaje-sin-citas" class="hidden text-center" style="padding: 2rem;">
+                    <p class="subtitle">No tienes citas programadas en este momento.</p>
+                    <button class="btn btn-primary" onclick="cambiarVista('agendar')">Agendar Nueva Cita</button>
                 </div>
-            </div>
-            <p id="payment-error" class="error-msg hidden">Error en el pago: Fondos insuficientes. Intenta nuevamente.</p>
-        </div>
+            </div> <!-- FIN DE VISTA 2 -->
 
-        <!-- PASO 4: Confirmación -->
-        <div id="step4" class="step-container hidden text-center">
-            <div class="success-icon">✓</div>
-            <h2 class="title-large">¡Cita Confirmada!</h2>
-            <p class="subtitle">El pago fue exitoso, tu horario ha sido bloqueado y hemos enviado una notificación a tu correo y al del doctor.</p>
-            <button onclick="location.reload()" class="btn btn-primary">Volver al inicio</button>
-        </div>
-
-    </main>
+        </main>
+    </div>
     <!-- Footer CasaMedica -->
     <footer class="site-footer">
         <!-- Descargo de responsabilidad -->

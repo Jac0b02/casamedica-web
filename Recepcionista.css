@@ -1,0 +1,178 @@
+/* ==================== DASHBOARD RECEPCIÓN ==================== */
+
+.dashboard-body {
+    background-color: #f3f4f6; /* Un gris muy claro para diferenciarlo del sitio web público */
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.dashboard-layout {
+    display: flex;
+    min-height: calc(100vh - 74px); /* Resta la altura del navbar */
+}
+
+/* --- Menú Lateral (Sidebar) --- */
+.sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 0;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    padding: 1rem 2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.nav-links li:hover {
+    background-color: #eff6ff;
+    color: var(--primary-color);
+}
+
+.nav-links li.active {
+    background-color: #e0f2fe;
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- Contenido Principal --- */
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* --- Tarjetas KPI (Key Performance Indicators) --- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-top: 3px solid var(--primary-color);
+}
+
+.kpi-card h3 {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.kpi-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-main);
+    margin: 0;
+}
+
+/* Colores de texto para KPIs */
+.text-warning { color: #d97706; }
+.text-danger { color: var(--danger-color); }
+.text-success { color: #16a34a; }
+
+/* --- Tabla de Datos --- */
+.panel-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th, .data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* --- Etiquetas (Badges) de Estado --- */
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.badge-info { background-color: #e0f2fe; color: #0284c7; }
+.badge-warning { background-color: #fef3c7; color: #d97706; }
+.badge-success { background-color: #dcfce3; color: #16a34a; }
+.badge-primary { background-color: #e0e7ff; color: #4338ca; }
+
+/* Utilidades adicionales */
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+.ml-3 { margin-left: 1rem; }
+
+/* ==================== MODAL DE CANCELACIÓN ==================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--danger-color);
+}
+
+.alerta-validacion {
+    padding: 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.alerta-success { background-color: #dcfce3; color: #16a34a; border: 1px solid #bbf7d0; }
+.alerta-danger { background-color: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+
+/* Margen superior para separar botones en el modal */
+.mt-4 { margin-top: 1.5rem; }
+

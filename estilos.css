@@ -112,15 +112,34 @@ h3 { font-size: 1.125rem; margin: 0 0 0.5rem 0; }
 .items-center { align-items: center; }
 
 /* Tarjetas (Cards) */
+/* Tarjetas (Cards) */
 .card {
     border: 1px solid var(--border-color);
     padding: 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: border-color 0.2s;
+    
+    /* Agregamos Flexbox para alinear el contenido */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Hace que todas las tarjetas midan lo mismo en su fila */
+    box-sizing: border-box;
 }
-.card:hover { border-color: var(--primary-color); }
-.card p { color: var(--text-muted); margin: 0 0 1rem 0; }
+
+.card:hover { 
+    border-color: var(--primary-color); 
+}
+
+.card p { 
+    color: var(--text-muted); 
+    margin: 0 0 1rem 0; 
+}
+
+/* Esta regla empuja el botón siempre al fondo de la tarjeta */
+.card .btn {
+    margin-top: auto; 
+}
 
 /* Formularios */
 .form-group { margin-bottom: 1.5rem; }
@@ -326,4 +345,117 @@ h3 { font-size: 1.125rem; margin: 0 0 0.5rem 0; }
     font-size: 0.85rem;
     color: var(--success-hover); /* Verde más oscuro para el texto */
     text-align: center;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh; /* Centrado vertical */
+    padding: 2rem;
+}
+
+.auth-box {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    border-top: 4px solid var(--primary-color);
+}
+
+.auth-box h2 {
+    text-align: center;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.auth-box p {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.auth-switch {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.auth-switch a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ==================== DASHBOARD PACIENTE ==================== */
+/* 1. Modificamos el contenedor para que ocupe todo el ancho y no se centre */
+/* 1. Contenedor principal sin márgenes para que toque el navbar y el fondo */
+.dashboard-layout {
+    display: flex;
+    max-width: 100%;
+    margin: 0; /* Quitamos todos los márgenes para que se pegue a las orillas */
+    min-height: calc(100vh - 75px); /* Ocupa el alto total de la pantalla menos el Navbar (que mide aprox 75px) */
+    background-color: #f8fafc; /* Fondo gris súper claro para que resalte el contenido (igual al del doctor) */
+}
+
+/* 2. Menú lateral que llega hasta abajo */
+.sidebar {
+    width: 260px;
+    background-color: white;
+    border-radius: 0; /* Quitamos los bordes redondeados por completo */
+    border-right: 1px solid var(--border-color); /* Línea divisoria sutil para separar del contenido */
+    height: auto; /* Al ser un elemento flex, auto hace que se estire hasta abajo junto con el contenido */
+    box-shadow: none; /* Quitamos la sombra para un diseño más plano y moderno */
+}
+
+/* 3. Área de contenido dinámico */
+.dashboard-content {
+    flex: 1;
+    padding: 2.5rem;
+    background-color: transparent; /* El fondo lo da el dashboard-layout */
+    box-shadow: none; /* Quitamos la sombra del contenedor para que solo las tarjetas (cards) tengan sombra */
+}
+
+.sidebar .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .nav-links li {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+    font-weight: 500;
+}
+
+.sidebar .nav-links li:hover {
+    background-color: #f0fdf4;
+    color: var(--primary-color);
+}
+
+.sidebar .nav-links li.active {
+    border-left-color: var(--primary-color);
+    background-color: #f0fdf4;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Área de contenido dinámico */
+.dashboard-content {
+    flex: 1;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }

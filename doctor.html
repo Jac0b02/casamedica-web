@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Médico - CasaMedica</title>
+    <!-- Reutilizamos tu archivo de estilos principal donde ya están las clases del dashboard -->
+    <link rel="stylesheet" href="doctor.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Navbar del Dashboard -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-text-group"> 
+                <h1>CasaMedica</h1>
+                <h2>PORTAL MÉDICO</h2>
+            </div>
+            <img src="casamedicasin.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="user-info">
+            👨‍⚕️ Dr. Carlos Pérez | Especialidad: Dermatología
+        </div>
+    </nav>
+
+    <div class="dashboard-layout">
+        <!-- Menú Lateral -->
+        <aside class="sidebar">
+            <ul class="nav-links">
+                <li class="active">📅 Mi Agenda de Hoy</li>
+                <li>📁 Expedientes Clínicos</li>
+                <li>🕒 Configurar Disponibilidad</li>
+                <li>📈 Mis Ingresos</li>
+            </ul>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="dashboard-content">
+            
+            <div class="section-header justify-between items-center mb-3">
+                <h2>Mis Consultas - 26 de Marzo de 2026</h2>
+                <span class="badge badge-info">Consultorio 3</span>
+            </div>
+
+            <!-- Tarjetas de Resumen Rápido -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Citas Programadas</h3>
+                    <p class="kpi-number">8</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Atendidos</h3>
+                    <p class="kpi-number text-success">2</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Siguiente Paciente</h3>
+                    <p class="kpi-number text-warning" style="font-size: 1.5rem;">09:30 AM</p>
+                </div>
+            </div>
+
+            <!-- Lista de Pacientes (Estilo Tarjetas para el Doctor) -->
+            <div class="doctor-agenda">
+                
+                <!-- Paciente 1: Esperando (Ya hizo check-in en recepción) -->
+                <div class="agenda-card status-waiting" id="cita-1">
+                    <div class="agenda-time">
+                        <h3>09:30 AM</h3>
+                        <span class="badge badge-primary">En Sala de Espera</span>
+                    </div>
+                    <div class="agenda-details">
+                        <h4>María García</h4>
+                        <p><strong>Motivo:</strong> Revisión de lunares (Primera vez)</p>
+                        <p class="text-muted"><small>Pago liquidado en recepción ✅</small></p>
+                    </div>
+                    <div class="agenda-card status-waiting" id="cita-1">
+                    <!-- ... (resto del código de la cita) ... -->
+                    
+                    <div class="agenda-action flex-gap">
+                        <button class="btn btn-danger" onclick="cancelarCitaDoctor('cita-1')">Cancelar</button>
+                        <button class="btn btn-primary" onclick="abrirConsulta('cita-1', 'María García', '09:30 AM')">Iniciar Consulta</button>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Paciente 2: Agendado (Aún no llega a recepción) -->
+                <div class="agenda-card" id="cita-2">
+                    <div class="agenda-time">
+                        <h3>10:15 AM</h3>
+                        <span class="badge badge-info">Agendado web</span>
+                    </div>
+                    <div class="agenda-details">
+                        <h4>Roberto Sánchez</h4>
+                        <p><strong>Motivo:</strong> Tratamiento acné (Seguimiento)</p>
+                        <p class="text-muted"><small>Anticipo pagado 50% ⏳</small></p>
+                    </div>
+                    <div class="agenda-action flex-gap">
+                        <button class="btn btn-danger" onclick="cancelarCitaDoctor('cita-2')">Cancelar</button>
+                        <button class="btn btn-outline" disabled>Aún no llega</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== MODAL: EXPEDIENTE CLÍNICO ==================== -->
+    <div id="modal-consulta" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 700px;"> <!-- Más ancho para notas médicas -->
+            <div class="justify-between items-center mb-3">
+                <h2 class="text-main m-0">Expediente de Consulta</h2>
+                <span class="badge badge-warning" id="consulta-hora"></span>
+            </div>
+            
+            <div class="summary-box mb-3">
+                <p><strong>Paciente:</strong> <span id="consulta-paciente"></span></p>
+            </div>
+
+            <!-- Formulario de Notas Médicas -->
+            <div class="form-group">
+                <label>Notas de Evolución y Síntomas (Privado)</label>
+                <textarea id="notas-medicas" class="form-control" rows="4" placeholder="Escriba aquí los síntomas y observaciones físicas..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Diagnóstico Principal</label>
+                <input type="text" id="diagnostico" class="form-control" placeholder="Ej. Dermatitis atópica leve">
+            </div>
+
+            <div class="form-group">
+                <label>Receta Médica (Se entregará al paciente)</label>
+                <textarea id="receta" class="form-control" rows="3" placeholder="Medicamento, dosis y frecuencia..."></textarea>
+            </div>
+
+            <div class="actions justify-between mt-4">
+                <button onclick="cerrarConsulta()" class="btn btn-text">Cancelar</button>
+                <div class="flex-gap">
+                    <button onclick="guardarProgreso()" class="btn btn-outline">Guardar Borrador</button>
+                    <button onclick="finalizarConsulta()" class="btn btn-success">Finalizar Consulta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ==================== FIN DEL MODAL ==================== -->
+
+    <script src="doctor.js"></script>
+</body>
+</html>
