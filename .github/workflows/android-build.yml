@@ -19,12 +19,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x android/gradlew
-      # Even though we don't have the gradlew file, this step is a good practice
-      # in case we add it later. The script I will use will install gradle.
-      # So, I will remove this step to avoid confusion.
-
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
@@ -32,7 +26,7 @@ jobs:
         build-root-directory: android
 
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: app-debug
         path: android/app/build/outputs/apk/debug/app-debug.apk
