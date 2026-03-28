@@ -1,0 +1,25 @@
+From 4ae46c69c778956a3cd3fc5aede53930a5b2e21f Mon Sep 17 00:00:00 2001
+From: Alexander Jacob Hernandez <146904532+Jac0b02@users.noreply.github.com>
+Date: Sat, 28 Mar 2026 03:17:33 +0000
+Subject: [PATCH] Fix: Update Gradle version in build workflow
+
+---
+ .github/workflows/android-build.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/android-build.yml b/.github/workflows/android-build.yml
+index f88ed31..7d640c4 100644
+--- a/.github/workflows/android-build.yml
++++ b/.github/workflows/android-build.yml
+@@ -22,7 +22,7 @@ jobs:
+     - name: Build with Gradle
+       uses: gradle/gradle-build-action@v3
+       with:
+-        gradle-version: '7.3.3'
++        gradle-version: '8.2'
+         arguments: build
+         build-root-directory: android
+ 
+-- 
+2.52.0
+
